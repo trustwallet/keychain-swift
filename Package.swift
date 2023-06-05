@@ -3,6 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "KeychainSwift",
+    platforms: [.iOS(.v13)],
     products: [
         .library(name: "KeychainSwift", targets: ["KeychainSwift"]),
     ],
