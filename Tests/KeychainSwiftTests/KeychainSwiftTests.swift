@@ -36,7 +36,7 @@ class KeychainSwiftTests: XCTestCase {
     
   func testSetWithAccessControlFlag() {
     obj.set("hello :)", forKey: "key 1", withAccess: .accessibleAfterFirstUnlock, withControlFlag: .userPresence)
-      let accessValue = (obj.lastQueryParameters?[KeychainSwiftConstants.accessible]) as! SecAccessControl
+      let accessValue = (obj.lastQueryParameters?[KeychainSwiftConstants.accessControl]) as! SecAccessControl
       let checkAccessValue = SecAccessControlCreateWithFlags(nil, (KeychainSwiftAccessOptions.accessibleAfterFirstUnlock.value) as CFString, .userPresence, nil)!
       XCTAssertEqual(checkAccessValue, accessValue)
   }
