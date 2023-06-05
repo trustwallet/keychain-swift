@@ -97,29 +97,26 @@ open class KeychainSwift {
     let accessible = access?.value ?? KeychainSwiftAccessOptions.defaultOption.value
       
     let prefixedKey = keyWithPrefix(key)
-    var accessWithFlag:Any = accessible as Any
-    
+
     var query: [String : Any]
       
-    if let control = controlFlag{
-        accessWithFlag = SecAccessControlCreateWithFlags(nil, accessible as CFString, control.value, nil) as Any
+    if let control = controlFlag {
+        let accessWithFlag = SecAccessControlCreateWithFlags(nil, accessible as CFString, control.value, nil) as Any
         query = [
-        KeychainSwiftConstants.klass       : kSecClassGenericPassword,
-        KeychainSwiftConstants.attrAccount : prefixedKey,
-        KeychainSwiftConstants.valueData   : value,
-        KeychainSwiftConstants.accessControl  : accessWithFlag
+            KeychainSwiftConstants.klass          : kSecClassGenericPassword,
+            KeychainSwiftConstants.attrAccount    : prefixedKey,
+            KeychainSwiftConstants.valueData      : value,
+            KeychainSwiftConstants.accessControl  : accessWithFlag
         ]
-    }else{
+      } else {
         query = [
-        KeychainSwiftConstants.klass       : kSecClassGenericPassword,
-        KeychainSwiftConstants.attrAccount : prefixedKey,
-        KeychainSwiftConstants.valueData   : value,
-        KeychainSwiftConstants.accessible  : accessible
+            KeychainSwiftConstants.klass       : kSecClassGenericPassword,
+            KeychainSwiftConstants.attrAccount : prefixedKey,
+            KeychainSwiftConstants.valueData   : value,
+            KeychainSwiftConstants.accessible  : accessible
         ]
     }
-    
-      
-      
+
     query = addAccessGroupWhenPresent(query)
     query = addSynchronizableIfRequired(query, addingItems: true)
     lastQueryParameters = query
@@ -147,7 +144,7 @@ open class KeychainSwift {
     let bytes: [UInt8] = value ? [1] : [0]
     let data = Data(bytes)
 
-    return set(data, forKey: key, withAccess: access,withControlFlag: controlFlag)
+    return set(data, forKey: key, withAccess: access, withControlFlag: controlFlag)
   }
 
   /**
